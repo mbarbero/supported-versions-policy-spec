@@ -1,0 +1,3362 @@
+{
+  "format": "urn:svers:conformance-fixtures:draft-3:1",
+  "specification": "Supported-Versions Policy Specification draft 3",
+  "notes": [
+    "Each case names an operation (covers: section 5; supported: section 6), a fixed clock, inputs and expected assertions.",
+    "The clock supplies the evaluation time when asOf is absent; an explicit asOf remains distinguishable from an omitted one.",
+    "Expected fields are assertions, not complete results: status always, resolvedRanges where the case pins them.",
+    "policyResources maps a support definition url to the decoded JSON found there; a url with no entry is unavailable.",
+    "cle is the list of CLE pages, supplied in full; cleComplete is the caller's statement that no page is missing.",
+    "All cases use the npm, semver and pypi profiles of Annex A. Cases for other profiles will follow their review."
+  ],
+  "cases": [
+    {
+      "id": "selector-1",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "4.1.1",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "2.9.0"
+            },
+            {
+              "version": "2.10.0"
+            },
+            {
+              "version": "2.10.1"
+            },
+            {
+              "version": "3.0.0"
+            },
+            {
+              "version": "3.1.0"
+            },
+            {
+              "version": "3.1.1"
+            },
+            {
+              "version": "3.2.0"
+            },
+            {
+              "version": "4.0.0"
+            },
+            {
+              "version": "4.0.1"
+            },
+            {
+              "version": "4.1.0"
+            },
+            {
+              "version": "4.1.1"
+            },
+            {
+              "version": "5.0.0-beta.1"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "supported",
+        "resolvedRanges": [
+          "vers:npm/4.1.1"
+        ]
+      }
+    },
+    {
+      "id": "selector-2",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "4.1.1",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest-major:2"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "2.9.0"
+            },
+            {
+              "version": "2.10.0"
+            },
+            {
+              "version": "2.10.1"
+            },
+            {
+              "version": "3.0.0"
+            },
+            {
+              "version": "3.1.0"
+            },
+            {
+              "version": "3.1.1"
+            },
+            {
+              "version": "3.2.0"
+            },
+            {
+              "version": "4.0.0"
+            },
+            {
+              "version": "4.0.1"
+            },
+            {
+              "version": "4.1.0"
+            },
+            {
+              "version": "4.1.1"
+            },
+            {
+              "version": "5.0.0-beta.1"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "supported",
+        "resolvedRanges": [
+          "vers:npm/3.0.0|3.1.0|3.1.1|3.2.0|4.0.0|4.0.1|4.1.0|4.1.1"
+        ]
+      }
+    },
+    {
+      "id": "selector-3",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "4.1.1",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest-patch:1 in latest-major:2"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "2.9.0"
+            },
+            {
+              "version": "2.10.0"
+            },
+            {
+              "version": "2.10.1"
+            },
+            {
+              "version": "3.0.0"
+            },
+            {
+              "version": "3.1.0"
+            },
+            {
+              "version": "3.1.1"
+            },
+            {
+              "version": "3.2.0"
+            },
+            {
+              "version": "4.0.0"
+            },
+            {
+              "version": "4.0.1"
+            },
+            {
+              "version": "4.1.0"
+            },
+            {
+              "version": "4.1.1"
+            },
+            {
+              "version": "5.0.0-beta.1"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "supported",
+        "resolvedRanges": [
+          "vers:npm/3.0.0|3.1.1|3.2.0|4.0.1|4.1.1"
+        ]
+      }
+    },
+    {
+      "id": "selector-4",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "4.1.1",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest-minor:1 in latest-major:2"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "2.9.0"
+            },
+            {
+              "version": "2.10.0"
+            },
+            {
+              "version": "2.10.1"
+            },
+            {
+              "version": "3.0.0"
+            },
+            {
+              "version": "3.1.0"
+            },
+            {
+              "version": "3.1.1"
+            },
+            {
+              "version": "3.2.0"
+            },
+            {
+              "version": "4.0.0"
+            },
+            {
+              "version": "4.0.1"
+            },
+            {
+              "version": "4.1.0"
+            },
+            {
+              "version": "4.1.1"
+            },
+            {
+              "version": "5.0.0-beta.1"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "supported",
+        "resolvedRanges": [
+          "vers:npm/3.2.0|4.1.0|4.1.1"
+        ]
+      }
+    },
+    {
+      "id": "selector-5",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "4.1.1",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/none"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "2.9.0"
+            },
+            {
+              "version": "2.10.0"
+            },
+            {
+              "version": "2.10.1"
+            },
+            {
+              "version": "3.0.0"
+            },
+            {
+              "version": "3.1.0"
+            },
+            {
+              "version": "3.1.1"
+            },
+            {
+              "version": "3.2.0"
+            },
+            {
+              "version": "4.0.0"
+            },
+            {
+              "version": "4.0.1"
+            },
+            {
+              "version": "4.1.0"
+            },
+            {
+              "version": "4.1.1"
+            },
+            {
+              "version": "5.0.0-beta.1"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "unsupported",
+        "resolvedRanges": [
+          "vers:none/*"
+        ]
+      }
+    },
+    {
+      "id": "selector-6",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "3.2.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest-patch:1 in latest-minor:1 in latest-major:2"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "2.9.0"
+            },
+            {
+              "version": "2.10.0"
+            },
+            {
+              "version": "2.10.1"
+            },
+            {
+              "version": "3.0.0"
+            },
+            {
+              "version": "3.1.0"
+            },
+            {
+              "version": "3.1.1"
+            },
+            {
+              "version": "3.2.0"
+            },
+            {
+              "version": "4.0.0"
+            },
+            {
+              "version": "4.0.1"
+            },
+            {
+              "version": "4.1.0"
+            },
+            {
+              "version": "4.1.1"
+            },
+            {
+              "version": "5.0.0-beta.1"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "supported",
+        "resolvedRanges": [
+          "vers:npm/3.2.0|4.1.1"
+        ]
+      }
+    },
+    {
+      "id": "selector-7",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "4.1.1",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest in {<4.0.0}"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "2.9.0"
+            },
+            {
+              "version": "2.10.0"
+            },
+            {
+              "version": "2.10.1"
+            },
+            {
+              "version": "3.0.0"
+            },
+            {
+              "version": "3.1.0"
+            },
+            {
+              "version": "3.1.1"
+            },
+            {
+              "version": "3.2.0"
+            },
+            {
+              "version": "4.0.0"
+            },
+            {
+              "version": "4.0.1"
+            },
+            {
+              "version": "4.1.0"
+            },
+            {
+              "version": "4.1.1"
+            },
+            {
+              "version": "5.0.0-beta.1"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "unsupported",
+        "resolvedRanges": [
+          "vers:npm/3.2.0"
+        ]
+      }
+    },
+    {
+      "id": "selector-8",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "2.10.1",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest-major:1|all in {>=2.10.0|<3.0.0-0}"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "2.9.0"
+            },
+            {
+              "version": "2.10.0"
+            },
+            {
+              "version": "2.10.1"
+            },
+            {
+              "version": "3.0.0"
+            },
+            {
+              "version": "3.1.0"
+            },
+            {
+              "version": "3.1.1"
+            },
+            {
+              "version": "3.2.0"
+            },
+            {
+              "version": "4.0.0"
+            },
+            {
+              "version": "4.0.1"
+            },
+            {
+              "version": "4.1.0"
+            },
+            {
+              "version": "4.1.1"
+            },
+            {
+              "version": "5.0.0-beta.1"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "supported",
+        "resolvedRanges": [
+          "vers:npm/2.10.0|2.10.1|4.0.0|4.0.1|4.1.0|4.1.1"
+        ]
+      }
+    },
+    {
+      "id": "prerelease-retires-major",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "3.2.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest-major:2",
+          "prereleases": true
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "2.9.0"
+            },
+            {
+              "version": "2.10.0"
+            },
+            {
+              "version": "2.10.1"
+            },
+            {
+              "version": "3.0.0"
+            },
+            {
+              "version": "3.1.0"
+            },
+            {
+              "version": "3.1.1"
+            },
+            {
+              "version": "3.2.0"
+            },
+            {
+              "version": "4.0.0"
+            },
+            {
+              "version": "4.0.1"
+            },
+            {
+              "version": "4.1.0"
+            },
+            {
+              "version": "4.1.1"
+            },
+            {
+              "version": "5.0.0-beta.1"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "unsupported",
+        "resolvedRanges": [
+          "vers:npm/4.0.0|4.0.1|4.1.0|4.1.1|5.0.0-beta.1"
+        ]
+      }
+    },
+    {
+      "id": "universal-all",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "opaque",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "vers:all/*"
+        }
+      },
+      "expected": {
+        "status": "supported",
+        "resolvedRanges": [
+          "vers:all/*"
+        ]
+      }
+    },
+    {
+      "id": "universal-none",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "opaque",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "vers:none/*"
+        }
+      },
+      "expected": {
+        "status": "unsupported",
+        "resolvedRanges": [
+          "vers:none/*"
+        ]
+      }
+    },
+    {
+      "id": "singleton-lower",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "3.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "vers:npm/>=2.0.0"
+        }
+      },
+      "expected": {
+        "status": "supported"
+      }
+    },
+    {
+      "id": "singleton-upper",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "vers:npm/<2.0.0"
+        }
+      },
+      "expected": {
+        "status": "supported"
+      }
+    },
+    {
+      "id": "unsorted-constraints",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "2.5.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "vers:npm/<3.0.0|>=2.0.0"
+        }
+      },
+      "expected": {
+        "status": "supported",
+        "resolvedRanges": [
+          "vers:npm/>=2.0.0|<3.0.0"
+        ]
+      }
+    },
+    {
+      "id": "exclusion-allows-other",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "vers:npm/!=2.0.0"
+        }
+      },
+      "expected": {
+        "status": "supported"
+      }
+    },
+    {
+      "id": "exclusion-removes-target",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "2.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "vers:npm/!=2.0.0"
+        }
+      },
+      "expected": {
+        "status": "unsupported"
+      }
+    },
+    {
+      "id": "absolute-includes-beta",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "3.0.0-beta.1",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "vers:npm/>=2.10.0|<3.0.0"
+        }
+      },
+      "expected": {
+        "status": "supported"
+      }
+    },
+    {
+      "id": "minor-range-excludes-next-beta",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "2.11.0-beta.1",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "vers:npm/>=2.10.0|<2.11.0-0"
+        }
+      },
+      "expected": {
+        "status": "unsupported"
+      }
+    },
+    {
+      "id": "partial-source",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest"
+        },
+        "releaseList": {
+          "complete": false,
+          "releases": [
+            {
+              "version": "1.0.0"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "unknown"
+      }
+    },
+    {
+      "id": "missing-source",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest"
+        }
+      },
+      "expected": {
+        "status": "unknown"
+      }
+    },
+    {
+      "id": "empty-list-age",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/age:P1M"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": []
+        }
+      },
+      "expected": {
+        "status": "unsupported",
+        "resolvedRanges": [
+          "vers:none/*"
+        ]
+      }
+    },
+    {
+      "id": "none-without-source",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/none"
+        }
+      },
+      "expected": {
+        "status": "unsupported",
+        "resolvedRanges": [
+          "vers:none/*"
+        ]
+      }
+    },
+    {
+      "id": "age-in-none",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/age:P1M in none"
+        }
+      },
+      "expected": {
+        "status": "unsupported",
+        "resolvedRanges": [
+          "vers:none/*"
+        ]
+      }
+    },
+    {
+      "id": "invalid-query-none",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "not-a-version",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/none"
+        }
+      },
+      "expected": {
+        "status": "error"
+      }
+    },
+    {
+      "id": "historical-undated",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "asOf": "2026-11-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "unknown"
+      }
+    },
+    {
+      "id": "absolute-undated",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "vers:npm/1.0.0"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "asOf": "2026-11-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "supported"
+      }
+    },
+    {
+      "id": "duplicate-date-conflict",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "1.0.0",
+              "releasedAt": "2025-01-01T00:00:00Z"
+            },
+            {
+              "version": "1.0.0+build",
+              "releasedAt": "2025-02-01T00:00:00Z"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "error"
+      }
+    },
+    {
+      "id": "build-equivalence",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0+build2",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "1.0.0+build1"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "supported",
+        "resolvedRanges": [
+          "vers:npm/1.0.0"
+        ]
+      }
+    },
+    {
+      "id": "oversized-n",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest:5"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "1.0.0"
+            },
+            {
+              "version": "2.0.0"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "supported",
+        "resolvedRanges": [
+          "vers:npm/1.0.0|2.0.0"
+        ]
+      }
+    },
+    {
+      "id": "sequential-selection",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest in {<2.0.0}"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "1.0.0"
+            },
+            {
+              "version": "2.0.0"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "supported",
+        "resolvedRanges": [
+          "vers:npm/1.0.0"
+        ]
+      }
+    },
+    {
+      "id": "delimited-union",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/all in {<2.0.0}|latest"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "1.0.0"
+            },
+            {
+              "version": "2.0.0"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "supported",
+        "resolvedRanges": [
+          "vers:npm/1.0.0|2.0.0"
+        ]
+      }
+    },
+    {
+      "id": "syntax-old-filter",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest in <2.0.0"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "1.0.0"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "error"
+      }
+    },
+    {
+      "id": "syntax-old-duration",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/since:P18M"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "1.0.0"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "error"
+      }
+    },
+    {
+      "id": "syntax-zero-n",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest:0"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "1.0.0"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "error"
+      }
+    },
+    {
+      "id": "syntax-leading-zero-n",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest:01"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "1.0.0"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "error"
+      }
+    },
+    {
+      "id": "syntax-zero-duration",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/age:P0D"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "1.0.0"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "error"
+      }
+    },
+    {
+      "id": "syntax-mixed-duration",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/age:P1M2D"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "1.0.0"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "error"
+      }
+    },
+    {
+      "id": "syntax-empty-term",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest||all"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "1.0.0"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "error"
+      }
+    },
+    {
+      "id": "month-expiry",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/age:P1M"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "1.0.0",
+              "releasedAt": "2026-02-28T00:00:00Z"
+            }
+          ]
+        },
+        "asOf": "2026-03-28T00:00:00Z"
+      },
+      "expected": {
+        "status": "unsupported",
+        "resolvedRanges": [
+          "vers:none/*"
+        ]
+      }
+    },
+    {
+      "id": "before-month-expiry",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/age:P1M"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "1.0.0",
+              "releasedAt": "2026-02-28T00:00:00Z"
+            }
+          ]
+        },
+        "asOf": "2026-03-27T23:59:59.999999999Z"
+      },
+      "expected": {
+        "status": "supported",
+        "resolvedRanges": [
+          "vers:npm/1.0.0"
+        ]
+      }
+    },
+    {
+      "id": "month-end-forward-addition",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/age:P1M"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "1.0.0",
+              "releasedAt": "2026-02-28T00:00:00Z"
+            }
+          ]
+        },
+        "asOf": "2026-03-31T00:00:00Z"
+      },
+      "expected": {
+        "status": "unsupported"
+      }
+    },
+    {
+      "id": "leap-expiry",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/age:P1Y"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "1.0.0",
+              "releasedAt": "2024-02-29T12:00:00Z"
+            }
+          ]
+        },
+        "asOf": "2025-02-28T12:00:00Z"
+      },
+      "expected": {
+        "status": "unsupported"
+      }
+    },
+    {
+      "id": "future-release",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "1.0.0",
+              "releasedAt": "2027-01-01T00:00:00Z"
+            }
+          ]
+        },
+        "asOf": "2026-11-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "unsupported"
+      }
+    },
+    {
+      "id": "grace-major-within",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "3.2.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest-patch:1 in latest-minor:1 in latest-major:1+P1Y"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "3.0.0",
+              "releasedAt": "2025-02-01T00:00:00Z"
+            },
+            {
+              "version": "3.1.0",
+              "releasedAt": "2025-06-01T00:00:00Z"
+            },
+            {
+              "version": "3.2.0",
+              "releasedAt": "2025-08-01T00:00:00Z"
+            },
+            {
+              "version": "4.0.0",
+              "releasedAt": "2026-10-01T00:00:00Z"
+            }
+          ]
+        },
+        "asOf": "2026-11-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "supported",
+        "resolvedRanges": [
+          "vers:npm/3.2.0|4.0.0"
+        ]
+      }
+    },
+    {
+      "id": "grace-major-last-second",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "3.2.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest-patch:1 in latest-minor:1 in latest-major:1+P1Y"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "3.0.0",
+              "releasedAt": "2025-02-01T00:00:00Z"
+            },
+            {
+              "version": "3.1.0",
+              "releasedAt": "2025-06-01T00:00:00Z"
+            },
+            {
+              "version": "3.2.0",
+              "releasedAt": "2025-08-01T00:00:00Z"
+            },
+            {
+              "version": "4.0.0",
+              "releasedAt": "2026-10-01T00:00:00Z"
+            }
+          ]
+        },
+        "asOf": "2027-09-30T23:59:59Z"
+      },
+      "expected": {
+        "status": "supported",
+        "resolvedRanges": [
+          "vers:npm/3.2.0|4.0.0"
+        ]
+      }
+    },
+    {
+      "id": "grace-major-expired",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "3.2.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest-patch:1 in latest-minor:1 in latest-major:1+P1Y"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "3.0.0",
+              "releasedAt": "2025-02-01T00:00:00Z"
+            },
+            {
+              "version": "3.1.0",
+              "releasedAt": "2025-06-01T00:00:00Z"
+            },
+            {
+              "version": "3.2.0",
+              "releasedAt": "2025-08-01T00:00:00Z"
+            },
+            {
+              "version": "4.0.0",
+              "releasedAt": "2026-10-01T00:00:00Z"
+            }
+          ]
+        },
+        "asOf": "2027-10-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "unsupported",
+        "resolvedRanges": [
+          "vers:npm/4.0.0"
+        ]
+      }
+    },
+    {
+      "id": "grace-before-successor",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "3.2.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest-patch:1 in latest-minor:1 in latest-major:1+P1Y"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "3.0.0",
+              "releasedAt": "2025-02-01T00:00:00Z"
+            },
+            {
+              "version": "3.1.0",
+              "releasedAt": "2025-06-01T00:00:00Z"
+            },
+            {
+              "version": "3.2.0",
+              "releasedAt": "2025-08-01T00:00:00Z"
+            },
+            {
+              "version": "4.0.0",
+              "releasedAt": "2026-10-01T00:00:00Z"
+            }
+          ]
+        },
+        "asOf": "2026-09-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "supported",
+        "resolvedRanges": [
+          "vers:npm/3.2.0"
+        ]
+      }
+    },
+    {
+      "id": "grace-patch-within",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "3.2.1",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest-patch:1 in latest-minor:1 in latest-major:1+P1Y"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "3.0.0",
+              "releasedAt": "2025-02-01T00:00:00Z"
+            },
+            {
+              "version": "3.1.0",
+              "releasedAt": "2025-06-01T00:00:00Z"
+            },
+            {
+              "version": "3.2.0",
+              "releasedAt": "2025-08-01T00:00:00Z"
+            },
+            {
+              "version": "4.0.0",
+              "releasedAt": "2026-10-01T00:00:00Z"
+            },
+            {
+              "version": "3.2.1",
+              "releasedAt": "2027-03-01T00:00:00Z"
+            }
+          ]
+        },
+        "asOf": "2027-06-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "supported",
+        "resolvedRanges": [
+          "vers:npm/3.2.1|4.0.0"
+        ]
+      }
+    },
+    {
+      "id": "grace-patch-does-not-extend",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "3.2.1",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest-patch:1 in latest-minor:1 in latest-major:1+P1Y"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "3.0.0",
+              "releasedAt": "2025-02-01T00:00:00Z"
+            },
+            {
+              "version": "3.1.0",
+              "releasedAt": "2025-06-01T00:00:00Z"
+            },
+            {
+              "version": "3.2.0",
+              "releasedAt": "2025-08-01T00:00:00Z"
+            },
+            {
+              "version": "4.0.0",
+              "releasedAt": "2026-10-01T00:00:00Z"
+            },
+            {
+              "version": "3.2.1",
+              "releasedAt": "2027-03-01T00:00:00Z"
+            }
+          ]
+        },
+        "asOf": "2027-10-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "unsupported",
+        "resolvedRanges": [
+          "vers:npm/4.0.0"
+        ]
+      }
+    },
+    {
+      "id": "grace-prerelease-does-not-supersede",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "3.2.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest-major:1+P1Y"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "3.2.0",
+              "releasedAt": "2025-08-01T00:00:00Z"
+            },
+            {
+              "version": "4.0.0-rc.1",
+              "releasedAt": "2026-01-01T00:00:00Z"
+            },
+            {
+              "version": "4.0.0",
+              "releasedAt": "2026-10-01T00:00:00Z"
+            }
+          ]
+        },
+        "asOf": "2027-06-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "supported",
+        "resolvedRanges": [
+          "vers:npm/3.2.0|4.0.0"
+        ]
+      }
+    },
+    {
+      "id": "grace-prerelease-supersedes-when-enabled",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "3.2.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest-major:1+P1Y",
+          "prereleases": true
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "3.2.0",
+              "releasedAt": "2025-08-01T00:00:00Z"
+            },
+            {
+              "version": "4.0.0-rc.1",
+              "releasedAt": "2026-01-01T00:00:00Z"
+            },
+            {
+              "version": "4.0.0",
+              "releasedAt": "2026-10-01T00:00:00Z"
+            }
+          ]
+        },
+        "asOf": "2027-06-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "unsupported",
+        "resolvedRanges": [
+          "vers:npm/4.0.0-rc.1|4.0.0"
+        ]
+      }
+    },
+    {
+      "id": "grace-two-majors",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "3.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest-major:2+P6M"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "2.0.0",
+              "releasedAt": "2023-01-01T00:00:00Z"
+            },
+            {
+              "version": "3.0.0",
+              "releasedAt": "2024-01-01T00:00:00Z"
+            },
+            {
+              "version": "4.0.0",
+              "releasedAt": "2025-01-01T00:00:00Z"
+            },
+            {
+              "version": "5.0.0",
+              "releasedAt": "2026-08-01T00:00:00Z"
+            }
+          ]
+        },
+        "asOf": "2026-11-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "supported",
+        "resolvedRanges": [
+          "vers:npm/3.0.0|4.0.0|5.0.0"
+        ]
+      }
+    },
+    {
+      "id": "grace-overlapping-majors",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "3.2.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest-patch:1 in latest-minor:1 in latest-major:1+P1Y"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "3.2.0",
+              "releasedAt": "2025-08-01T00:00:00Z"
+            },
+            {
+              "version": "4.0.0",
+              "releasedAt": "2026-10-01T00:00:00Z"
+            },
+            {
+              "version": "5.0.0",
+              "releasedAt": "2027-03-10T00:00:00Z"
+            }
+          ]
+        },
+        "asOf": "2027-06-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "supported",
+        "resolvedRanges": [
+          "vers:npm/3.2.0|4.0.0|5.0.0"
+        ]
+      }
+    },
+    {
+      "id": "grace-capped-at-two-majors",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "3.2.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest-patch:1 in latest-minor:1 in latest-major:1+P1Y in latest-major:2"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "3.2.0",
+              "releasedAt": "2025-08-01T00:00:00Z"
+            },
+            {
+              "version": "4.0.0",
+              "releasedAt": "2026-10-01T00:00:00Z"
+            },
+            {
+              "version": "5.0.0",
+              "releasedAt": "2027-03-10T00:00:00Z"
+            }
+          ]
+        },
+        "asOf": "2027-06-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "unsupported",
+        "resolvedRanges": [
+          "vers:npm/4.0.0|5.0.0"
+        ]
+      }
+    },
+    {
+      "id": "grace-minor",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "4.1.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest-minor:1+P3M"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "4.0.0",
+              "releasedAt": "2026-01-01T00:00:00Z"
+            },
+            {
+              "version": "4.1.0",
+              "releasedAt": "2026-06-01T00:00:00Z"
+            },
+            {
+              "version": "4.2.0",
+              "releasedAt": "2026-10-01T00:00:00Z"
+            }
+          ]
+        },
+        "asOf": "2026-11-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "supported",
+        "resolvedRanges": [
+          "vers:npm/4.1.0|4.2.0"
+        ]
+      }
+    },
+    {
+      "id": "grace-version",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest:1+P30D"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "1.0.0",
+              "releasedAt": "2026-09-01T00:00:00Z"
+            },
+            {
+              "version": "1.1.0",
+              "releasedAt": "2026-10-15T00:00:00Z"
+            }
+          ]
+        },
+        "asOf": "2026-11-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "supported",
+        "resolvedRanges": [
+          "vers:npm/1.0.0|1.1.0"
+        ]
+      }
+    },
+    {
+      "id": "grace-counted-from-supersession",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.1",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest:1+P30D"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "2.0.0",
+              "releasedAt": "2026-10-20T00:00:00Z"
+            },
+            {
+              "version": "1.0.1",
+              "releasedAt": "2026-10-25T00:00:00Z"
+            }
+          ]
+        },
+        "asOf": "2026-11-20T00:00:00Z"
+      },
+      "expected": {
+        "status": "unsupported",
+        "resolvedRanges": [
+          "vers:npm/2.0.0"
+        ]
+      }
+    },
+    {
+      "id": "grace-undated",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "3.2.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest-patch:1 in latest-minor:1 in latest-major:1+P1Y"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "3.2.0"
+            },
+            {
+              "version": "4.0.0"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "unknown"
+      }
+    },
+    {
+      "id": "syntax-grace-on-bare-latest",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest+P1Y"
+        }
+      },
+      "expected": {
+        "status": "error"
+      }
+    },
+    {
+      "id": "syntax-zero-grace",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest-major:1+P0D"
+        }
+      },
+      "expected": {
+        "status": "error"
+      }
+    },
+    {
+      "id": "pypi-epoch",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:pypi/example",
+        "version": "1!1.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:pypi/latest-major:1"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "9.0"
+            },
+            {
+              "version": "1!1.0"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "supported",
+        "resolvedRanges": [
+          "vers:pypi/1%211"
+        ]
+      }
+    },
+    {
+      "id": "pypi-equivalent-spelling",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:pypi/example",
+        "version": "1.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:pypi/latest"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "1.0.0"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "supported",
+        "resolvedRanges": [
+          "vers:pypi/1"
+        ]
+      }
+    },
+    {
+      "id": "pypi-local-not-equal",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:pypi/example",
+        "version": "1+local",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "vers:pypi/1"
+        }
+      },
+      "expected": {
+        "status": "unsupported"
+      }
+    },
+    {
+      "id": "pypi-post-release",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:pypi/example",
+        "version": "1.0.post1",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:pypi/latest"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "1.0"
+            },
+            {
+              "version": "1.0.post1"
+            },
+            {
+              "version": "2.0.dev1"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "supported",
+        "resolvedRanges": [
+          "vers:pypi/1.post1"
+        ]
+      }
+    },
+    {
+      "id": "unrelated-entry",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "vers:pypi/1"
+        }
+      },
+      "expected": {
+        "status": "error"
+      }
+    },
+    {
+      "id": "shared-policy-other-ecosystems-ignored",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "2.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": [
+            "svers:npm/latest-major:1",
+            "svers:pypi/latest-major:1",
+            "svers:maven/latest-major:1"
+          ]
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "1.0.0"
+            },
+            {
+              "version": "2.0.0"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "supported",
+        "resolvedRanges": [
+          "vers:npm/2.0.0"
+        ]
+      }
+    },
+    {
+      "id": "error-dominance",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": [
+            "vers:all/*",
+            "svers:npm/latest:0"
+          ]
+        }
+      },
+      "expected": {
+        "status": "error"
+      }
+    },
+    {
+      "id": "unknown-dominated",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": [
+            "vers:npm/1.0.0",
+            "svers:npm/latest"
+          ]
+        }
+      },
+      "expected": {
+        "status": "supported"
+      }
+    },
+    {
+      "id": "repeated-equivalent-operands",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:pypi/example",
+        "version": "1",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "vers:pypi/1|1.0"
+        }
+      },
+      "expected": {
+        "status": "error"
+      }
+    },
+    {
+      "id": "case-sensitive-npm",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/LegacyPackage",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "vers:npm/1.0.0"
+        }
+      },
+      "expected": {
+        "status": "supported"
+      }
+    },
+    {
+      "id": "identifier-mismatch",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "vers:npm/1.0.0",
+          "identifier": "pkg:npm/another"
+        }
+      },
+      "expected": {
+        "status": "error"
+      }
+    },
+    {
+      "id": "missing-schema-standalone",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "policy": "vers:npm/1.0.0"
+        }
+      },
+      "expected": {
+        "status": "error"
+      }
+    },
+    {
+      "id": "alias-selection",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "vers:npm/1.0.0",
+          "identifier": [
+            "pkg:npm/example",
+            "pkg:pypi/example"
+          ]
+        }
+      },
+      "expected": {
+        "status": "supported"
+      }
+    },
+    {
+      "id": "npm-prefix-rejected",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "v1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:npm/latest"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "=1.0.0"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "error"
+      }
+    },
+    {
+      "id": "generic-scheme-not-applicable",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "vers:semver/1.0.0"
+        }
+      },
+      "expected": {
+        "status": "error"
+      }
+    },
+    {
+      "id": "generic-type-absolute",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:generic/example",
+        "version": "1.2.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "vers:semver/>=1.0.0"
+        }
+      },
+      "expected": {
+        "status": "supported",
+        "resolvedRanges": [
+          "vers:semver/>=1.0.0"
+        ]
+      }
+    },
+    {
+      "id": "generic-type-relative",
+      "operation": "covers",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:generic/example",
+        "version": "2.0.0",
+        "policyDocument": {
+          "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+          "policy": "svers:semver/latest-major:1"
+        },
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "1.0.0"
+            },
+            {
+              "version": "2.0.0"
+            },
+            {
+              "version": "2.1.0"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "status": "supported",
+        "resolvedRanges": [
+          "vers:semver/2.0.0|2.1.0"
+        ]
+      }
+    },
+    {
+      "id": "cle-before-ending",
+      "operation": "supported",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "2.10.1",
+        "cle": [
+          {
+            "$schema": "https://tc54.org/schemas/cle/cle-1.0.0.schema.json",
+            "identifier": "pkg:npm/example",
+            "updatedAt": "2026-11-01T00:00:00Z",
+            "definitions": {
+              "support": [
+                {
+                  "id": "security-2.10",
+                  "description": "Security fixes for the 2.10 minor line",
+                  "url": "https://example.com/support/security-2.10-v1.json"
+                }
+              ]
+            },
+            "events": [
+              {
+                "id": 2,
+                "type": "endOfSupport",
+                "effective": "2026-06-30T00:00:00Z",
+                "published": "2026-01-01T00:00:00Z",
+                "versions": [
+                  {
+                    "range": "vers:npm/>=2.10.0|<2.11.0-0"
+                  }
+                ],
+                "supportId": "security-2.10"
+              },
+              {
+                "id": 1,
+                "type": "released",
+                "effective": "2024-05-01T00:00:00Z",
+                "published": "2024-05-01T00:00:00Z",
+                "version": "2.10.1"
+              }
+            ]
+          }
+        ],
+        "policyResources": {
+          "https://example.com/support/security-2.10-v1.json": {
+            "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+            "identifier": "pkg:npm/example",
+            "policy": "vers:npm/>=2.10.0|<2.11.0-0"
+          }
+        },
+        "cleComplete": true,
+        "asOf": "2026-06-29T23:59:59Z"
+      },
+      "expected": {
+        "status": "supported"
+      }
+    },
+    {
+      "id": "cle-exact-ending",
+      "operation": "supported",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "2.10.1",
+        "cle": [
+          {
+            "$schema": "https://tc54.org/schemas/cle/cle-1.0.0.schema.json",
+            "identifier": "pkg:npm/example",
+            "updatedAt": "2026-11-01T00:00:00Z",
+            "definitions": {
+              "support": [
+                {
+                  "id": "security-2.10",
+                  "description": "Security fixes for the 2.10 minor line",
+                  "url": "https://example.com/support/security-2.10-v1.json"
+                }
+              ]
+            },
+            "events": [
+              {
+                "id": 2,
+                "type": "endOfSupport",
+                "effective": "2026-06-30T00:00:00Z",
+                "published": "2026-01-01T00:00:00Z",
+                "versions": [
+                  {
+                    "range": "vers:npm/>=2.10.0|<2.11.0-0"
+                  }
+                ],
+                "supportId": "security-2.10"
+              },
+              {
+                "id": 1,
+                "type": "released",
+                "effective": "2024-05-01T00:00:00Z",
+                "published": "2024-05-01T00:00:00Z",
+                "version": "2.10.1"
+              }
+            ]
+          }
+        ],
+        "policyResources": {
+          "https://example.com/support/security-2.10-v1.json": {
+            "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+            "identifier": "pkg:npm/example",
+            "policy": "vers:npm/>=2.10.0|<2.11.0-0"
+          }
+        },
+        "cleComplete": true,
+        "asOf": "2026-06-30T00:00:00Z"
+      },
+      "expected": {
+        "status": "unsupported"
+      }
+    },
+    {
+      "id": "cle-after-ending",
+      "operation": "supported",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "2.10.1",
+        "cle": [
+          {
+            "$schema": "https://tc54.org/schemas/cle/cle-1.0.0.schema.json",
+            "identifier": "pkg:npm/example",
+            "updatedAt": "2026-11-01T00:00:00Z",
+            "definitions": {
+              "support": [
+                {
+                  "id": "security-2.10",
+                  "description": "Security fixes for the 2.10 minor line",
+                  "url": "https://example.com/support/security-2.10-v1.json"
+                }
+              ]
+            },
+            "events": [
+              {
+                "id": 2,
+                "type": "endOfSupport",
+                "effective": "2026-06-30T00:00:00Z",
+                "published": "2026-01-01T00:00:00Z",
+                "versions": [
+                  {
+                    "range": "vers:npm/>=2.10.0|<2.11.0-0"
+                  }
+                ],
+                "supportId": "security-2.10"
+              },
+              {
+                "id": 1,
+                "type": "released",
+                "effective": "2024-05-01T00:00:00Z",
+                "published": "2024-05-01T00:00:00Z",
+                "version": "2.10.1"
+              }
+            ]
+          }
+        ],
+        "policyResources": {
+          "https://example.com/support/security-2.10-v1.json": {
+            "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+            "identifier": "pkg:npm/example",
+            "policy": "vers:npm/>=2.10.0|<2.11.0-0"
+          }
+        },
+        "cleComplete": true,
+        "asOf": "2026-11-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "unsupported"
+      }
+    },
+    {
+      "id": "cle-ended-unavailable",
+      "operation": "supported",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "2.10.1",
+        "cle": [
+          {
+            "$schema": "https://tc54.org/schemas/cle/cle-1.0.0.schema.json",
+            "identifier": "pkg:npm/example",
+            "updatedAt": "2026-11-01T00:00:00Z",
+            "definitions": {
+              "support": [
+                {
+                  "id": "security-2.10",
+                  "description": "Security fixes for the 2.10 minor line",
+                  "url": "https://example.com/support/security-2.10-v1.json"
+                }
+              ]
+            },
+            "events": [
+              {
+                "id": 2,
+                "type": "endOfSupport",
+                "effective": "2026-06-30T00:00:00Z",
+                "published": "2026-01-01T00:00:00Z",
+                "versions": [
+                  {
+                    "range": "vers:npm/>=2.10.0|<2.11.0-0"
+                  }
+                ],
+                "supportId": "security-2.10"
+              },
+              {
+                "id": 1,
+                "type": "released",
+                "effective": "2024-05-01T00:00:00Z",
+                "published": "2024-05-01T00:00:00Z",
+                "version": "2.10.1"
+              }
+            ]
+          }
+        ],
+        "policyResources": {},
+        "cleComplete": true,
+        "asOf": "2026-11-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "unsupported"
+      }
+    },
+    {
+      "id": "cle-unavailable-active",
+      "operation": "supported",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "2.10.1",
+        "cle": [
+          {
+            "$schema": "https://tc54.org/schemas/cle/cle-1.0.0.schema.json",
+            "identifier": "pkg:npm/example",
+            "updatedAt": "2026-11-01T00:00:00Z",
+            "definitions": {
+              "support": [
+                {
+                  "id": "security-2.10",
+                  "description": "Security fixes for the 2.10 minor line",
+                  "url": "https://example.com/support/security-2.10-v1.json"
+                }
+              ]
+            },
+            "events": [
+              {
+                "id": 2,
+                "type": "endOfSupport",
+                "effective": "2026-06-30T00:00:00Z",
+                "published": "2026-01-01T00:00:00Z",
+                "versions": [
+                  {
+                    "range": "vers:npm/>=2.10.0|<2.11.0-0"
+                  }
+                ],
+                "supportId": "security-2.10"
+              },
+              {
+                "id": 1,
+                "type": "released",
+                "effective": "2024-05-01T00:00:00Z",
+                "published": "2024-05-01T00:00:00Z",
+                "version": "2.10.1"
+              }
+            ]
+          }
+        ],
+        "policyResources": {},
+        "cleComplete": true,
+        "asOf": "2026-06-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "unknown"
+      }
+    },
+    {
+      "id": "cle-not-policy",
+      "operation": "supported",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "2.10.1",
+        "cle": [
+          {
+            "$schema": "https://tc54.org/schemas/cle/cle-1.0.0.schema.json",
+            "identifier": "pkg:npm/example",
+            "updatedAt": "2026-11-01T00:00:00Z",
+            "definitions": {
+              "support": [
+                {
+                  "id": "security-2.10",
+                  "description": "Security fixes for the 2.10 minor line",
+                  "url": "https://example.com/support/security-2.10-v1.json"
+                }
+              ]
+            },
+            "events": [
+              {
+                "id": 2,
+                "type": "endOfSupport",
+                "effective": "2026-06-30T00:00:00Z",
+                "published": "2026-01-01T00:00:00Z",
+                "versions": [
+                  {
+                    "range": "vers:npm/>=2.10.0|<2.11.0-0"
+                  }
+                ],
+                "supportId": "security-2.10"
+              },
+              {
+                "id": 1,
+                "type": "released",
+                "effective": "2024-05-01T00:00:00Z",
+                "published": "2024-05-01T00:00:00Z",
+                "version": "2.10.1"
+              }
+            ]
+          }
+        ],
+        "policyResources": {
+          "https://example.com/support/security-2.10-v1.json": {
+            "text": "human page"
+          }
+        },
+        "cleComplete": true,
+        "asOf": "2026-06-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "unknown"
+      }
+    },
+    {
+      "id": "cle-incomplete",
+      "operation": "supported",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "2.10.1",
+        "cle": [
+          {
+            "$schema": "https://tc54.org/schemas/cle/cle-1.0.0.schema.json",
+            "identifier": "pkg:npm/example",
+            "updatedAt": "2026-11-01T00:00:00Z",
+            "definitions": {
+              "support": [
+                {
+                  "id": "security-2.10",
+                  "description": "Security fixes for the 2.10 minor line",
+                  "url": "https://example.com/support/security-2.10-v1.json"
+                }
+              ]
+            },
+            "events": [
+              {
+                "id": 2,
+                "type": "endOfSupport",
+                "effective": "2026-06-30T00:00:00Z",
+                "published": "2026-01-01T00:00:00Z",
+                "versions": [
+                  {
+                    "range": "vers:npm/>=2.10.0|<2.11.0-0"
+                  }
+                ],
+                "supportId": "security-2.10"
+              },
+              {
+                "id": 1,
+                "type": "released",
+                "effective": "2024-05-01T00:00:00Z",
+                "published": "2024-05-01T00:00:00Z",
+                "version": "2.10.1"
+              }
+            ]
+          }
+        ],
+        "policyResources": {
+          "https://example.com/support/security-2.10-v1.json": {
+            "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+            "identifier": "pkg:npm/example",
+            "policy": "vers:npm/>=2.10.0|<2.11.0-0"
+          }
+        },
+        "cleComplete": false,
+        "asOf": "2026-11-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "unknown"
+      }
+    },
+    {
+      "id": "cle-no-definitions",
+      "operation": "supported",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "2.10.1",
+        "cle": [
+          {
+            "$schema": "https://tc54.org/schemas/cle/cle-1.0.0.schema.json",
+            "identifier": "pkg:npm/example",
+            "updatedAt": "2026-11-01T00:00:00Z",
+            "events": [
+              {
+                "id": 1,
+                "type": "released",
+                "effective": "2024-05-01T00:00:00Z",
+                "published": "2024-05-01T00:00:00Z",
+                "version": "2.10.1"
+              }
+            ]
+          }
+        ],
+        "policyResources": {
+          "https://example.com/support/security-2.10-v1.json": {
+            "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+            "identifier": "pkg:npm/example",
+            "policy": "vers:npm/>=2.10.0|<2.11.0-0"
+          }
+        },
+        "cleComplete": true,
+        "asOf": "2026-11-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "unsupported"
+      }
+    },
+    {
+      "id": "cle-withdraw-ending",
+      "operation": "supported",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "2.10.1",
+        "cle": [
+          {
+            "$schema": "https://tc54.org/schemas/cle/cle-1.0.0.schema.json",
+            "identifier": "pkg:npm/example",
+            "updatedAt": "2026-11-01T00:00:00Z",
+            "definitions": {
+              "support": [
+                {
+                  "id": "security-2.10",
+                  "description": "Security fixes for the 2.10 minor line",
+                  "url": "https://example.com/support/security-2.10-v1.json"
+                }
+              ]
+            },
+            "events": [
+              {
+                "id": 3,
+                "type": "withdrawn",
+                "effective": "2026-06-30T00:00:00Z",
+                "published": "2026-01-01T00:00:00Z",
+                "eventId": 2
+              },
+              {
+                "id": 2,
+                "type": "endOfSupport",
+                "effective": "2026-06-30T00:00:00Z",
+                "published": "2026-01-01T00:00:00Z",
+                "versions": [
+                  {
+                    "range": "vers:npm/>=2.10.0|<2.11.0-0"
+                  }
+                ],
+                "supportId": "security-2.10"
+              },
+              {
+                "id": 1,
+                "type": "released",
+                "effective": "2024-05-01T00:00:00Z",
+                "published": "2024-05-01T00:00:00Z",
+                "version": "2.10.1"
+              }
+            ]
+          }
+        ],
+        "policyResources": {
+          "https://example.com/support/security-2.10-v1.json": {
+            "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+            "identifier": "pkg:npm/example",
+            "policy": "vers:npm/>=2.10.0|<2.11.0-0"
+          }
+        },
+        "cleComplete": true,
+        "asOf": "2026-11-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "supported"
+      }
+    },
+    {
+      "id": "cle-withdraw-withdrawal",
+      "operation": "supported",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "2.10.1",
+        "cle": [
+          {
+            "$schema": "https://tc54.org/schemas/cle/cle-1.0.0.schema.json",
+            "identifier": "pkg:npm/example",
+            "updatedAt": "2026-11-01T00:00:00Z",
+            "definitions": {
+              "support": [
+                {
+                  "id": "security-2.10",
+                  "description": "Security fixes for the 2.10 minor line",
+                  "url": "https://example.com/support/security-2.10-v1.json"
+                }
+              ]
+            },
+            "events": [
+              {
+                "id": 4,
+                "type": "withdrawn",
+                "effective": "2026-06-30T00:00:00Z",
+                "published": "2026-01-01T00:00:00Z",
+                "eventId": 3
+              },
+              {
+                "id": 3,
+                "type": "withdrawn",
+                "effective": "2026-06-30T00:00:00Z",
+                "published": "2026-01-01T00:00:00Z",
+                "eventId": 2
+              },
+              {
+                "id": 2,
+                "type": "endOfSupport",
+                "effective": "2026-06-30T00:00:00Z",
+                "published": "2026-01-01T00:00:00Z",
+                "versions": [
+                  {
+                    "range": "vers:npm/>=2.10.0|<2.11.0-0"
+                  }
+                ],
+                "supportId": "security-2.10"
+              },
+              {
+                "id": 1,
+                "type": "released",
+                "effective": "2024-05-01T00:00:00Z",
+                "published": "2024-05-01T00:00:00Z",
+                "version": "2.10.1"
+              }
+            ]
+          }
+        ],
+        "policyResources": {
+          "https://example.com/support/security-2.10-v1.json": {
+            "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+            "identifier": "pkg:npm/example",
+            "policy": "vers:npm/>=2.10.0|<2.11.0-0"
+          }
+        },
+        "cleComplete": true,
+        "asOf": "2026-11-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "unsupported"
+      }
+    },
+    {
+      "id": "cle-withdrawal-ignores-as-of",
+      "operation": "supported",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "2.10.1",
+        "cle": [
+          {
+            "$schema": "https://tc54.org/schemas/cle/cle-1.0.0.schema.json",
+            "identifier": "pkg:npm/example",
+            "updatedAt": "2026-11-01T00:00:00Z",
+            "definitions": {
+              "support": [
+                {
+                  "id": "security-2.10",
+                  "description": "Security fixes for the 2.10 minor line",
+                  "url": "https://example.com/support/security-2.10-v1.json"
+                }
+              ]
+            },
+            "events": [
+              {
+                "id": 3,
+                "type": "withdrawn",
+                "effective": "2027-01-01T00:00:00Z",
+                "published": "2026-01-01T00:00:00Z",
+                "eventId": 2
+              },
+              {
+                "id": 2,
+                "type": "endOfSupport",
+                "effective": "2026-06-30T00:00:00Z",
+                "published": "2026-01-01T00:00:00Z",
+                "versions": [
+                  {
+                    "range": "vers:npm/>=2.10.0|<2.11.0-0"
+                  }
+                ],
+                "supportId": "security-2.10"
+              },
+              {
+                "id": 1,
+                "type": "released",
+                "effective": "2024-05-01T00:00:00Z",
+                "published": "2024-05-01T00:00:00Z",
+                "version": "2.10.1"
+              }
+            ]
+          }
+        ],
+        "policyResources": {
+          "https://example.com/support/security-2.10-v1.json": {
+            "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+            "identifier": "pkg:npm/example",
+            "policy": "vers:npm/>=2.10.0|<2.11.0-0"
+          }
+        },
+        "cleComplete": true,
+        "asOf": "2026-11-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "supported"
+      }
+    },
+    {
+      "id": "cle-late-publication",
+      "operation": "supported",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "2.10.1",
+        "cle": [
+          {
+            "$schema": "https://tc54.org/schemas/cle/cle-1.0.0.schema.json",
+            "identifier": "pkg:npm/example",
+            "updatedAt": "2026-11-01T00:00:00Z",
+            "definitions": {
+              "support": [
+                {
+                  "id": "security-2.10",
+                  "description": "Security fixes for the 2.10 minor line",
+                  "url": "https://example.com/support/security-2.10-v1.json"
+                }
+              ]
+            },
+            "events": [
+              {
+                "id": 2,
+                "type": "endOfSupport",
+                "effective": "2026-06-30T00:00:00Z",
+                "published": "2026-10-01T00:00:00Z",
+                "versions": [
+                  {
+                    "range": "vers:npm/>=2.10.0|<2.11.0-0"
+                  }
+                ],
+                "supportId": "security-2.10"
+              },
+              {
+                "id": 1,
+                "type": "released",
+                "effective": "2024-05-01T00:00:00Z",
+                "published": "2024-05-01T00:00:00Z",
+                "version": "2.10.1"
+              }
+            ]
+          }
+        ],
+        "policyResources": {
+          "https://example.com/support/security-2.10-v1.json": {
+            "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+            "identifier": "pkg:npm/example",
+            "policy": "vers:npm/>=2.10.0|<2.11.0-0"
+          }
+        },
+        "cleComplete": true,
+        "asOf": "2026-07-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "unsupported"
+      }
+    },
+    {
+      "id": "cle-eol-unavailable",
+      "operation": "supported",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "2.10.1",
+        "cle": [
+          {
+            "$schema": "https://tc54.org/schemas/cle/cle-1.0.0.schema.json",
+            "identifier": "pkg:npm/example",
+            "updatedAt": "2026-11-01T00:00:00Z",
+            "definitions": {
+              "support": [
+                {
+                  "id": "security-2.10",
+                  "description": "Security fixes for the 2.10 minor line",
+                  "url": "https://example.com/support/security-2.10-v1.json"
+                }
+              ]
+            },
+            "events": [
+              {
+                "id": 2,
+                "type": "endOfLife",
+                "effective": "2026-06-30T00:00:00Z",
+                "published": "2026-01-01T00:00:00Z",
+                "versions": [
+                  {
+                    "range": "vers:npm/>=2.10.0|<2.11.0-0"
+                  }
+                ]
+              },
+              {
+                "id": 1,
+                "type": "released",
+                "effective": "2024-05-01T00:00:00Z",
+                "published": "2024-05-01T00:00:00Z",
+                "version": "2.10.1"
+              }
+            ]
+          }
+        ],
+        "policyResources": {},
+        "cleComplete": true,
+        "asOf": "2026-11-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "unsupported"
+      }
+    },
+    {
+      "id": "cle-event-range-other-scheme-ignored",
+      "operation": "supported",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "cle": [
+          {
+            "$schema": "https://tc54.org/schemas/cle/cle-1.0.0.schema.json",
+            "identifier": [
+              "pkg:npm/example",
+              "pkg:maven/org.example/example"
+            ],
+            "updatedAt": "2026-11-01T00:00:00Z",
+            "definitions": {
+              "support": [
+                {
+                  "id": "standard",
+                  "description": "Fixes for 1.0.0",
+                  "url": "https://example.com/standard.json"
+                }
+              ]
+            },
+            "events": [
+              {
+                "id": 1,
+                "type": "endOfLife",
+                "effective": "2026-01-01T00:00:00Z",
+                "published": "2026-01-01T00:00:00Z",
+                "versions": [
+                  {
+                    "range": "vers:maven/>=1.0.0"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "policyResources": {
+          "https://example.com/standard.json": {
+            "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+            "policy": "vers:npm/1.0.0"
+          }
+        },
+        "cleComplete": true,
+        "asOf": "2026-11-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "supported"
+      }
+    },
+    {
+      "id": "cle-cross-page-withdrawal",
+      "operation": "supported",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "2.10.1",
+        "cle": [
+          {
+            "$schema": "https://tc54.org/schemas/cle/cle-1.0.0.schema.json",
+            "identifier": "pkg:npm/example",
+            "updatedAt": "2026-11-01T00:00:00Z",
+            "definitions": {
+              "support": [
+                {
+                  "id": "security-2.10",
+                  "description": "Security fixes for the 2.10 minor line",
+                  "url": "https://example.com/support/security-2.10-v1.json"
+                }
+              ]
+            },
+            "events": [
+              {
+                "id": 3,
+                "type": "withdrawn",
+                "effective": "2026-06-30T00:00:00Z",
+                "published": "2026-01-01T00:00:00Z",
+                "eventId": 2
+              }
+            ]
+          },
+          {
+            "$schema": "https://tc54.org/schemas/cle/cle-1.0.0.schema.json",
+            "identifier": "pkg:npm/example",
+            "updatedAt": "2026-11-01T00:00:00Z",
+            "definitions": {
+              "support": [
+                {
+                  "id": "security-2.10",
+                  "description": "Security fixes for the 2.10 minor line",
+                  "url": "https://example.com/support/security-2.10-v1.json"
+                }
+              ]
+            },
+            "events": [
+              {
+                "id": 2,
+                "type": "endOfSupport",
+                "effective": "2026-06-30T00:00:00Z",
+                "published": "2026-01-01T00:00:00Z",
+                "versions": [
+                  {
+                    "range": "vers:npm/>=2.10.0|<2.11.0-0"
+                  }
+                ],
+                "supportId": "security-2.10"
+              },
+              {
+                "id": 1,
+                "type": "released",
+                "effective": "2024-05-01T00:00:00Z",
+                "published": "2024-05-01T00:00:00Z",
+                "version": "2.10.1"
+              }
+            ]
+          }
+        ],
+        "policyResources": {
+          "https://example.com/support/security-2.10-v1.json": {
+            "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+            "identifier": "pkg:npm/example",
+            "policy": "vers:npm/>=2.10.0|<2.11.0-0"
+          }
+        },
+        "cleComplete": true,
+        "asOf": "2026-11-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "supported"
+      }
+    },
+    {
+      "id": "cle-withdraw-release",
+      "operation": "supported",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "cle": [
+          {
+            "$schema": "https://tc54.org/schemas/cle/cle-1.0.0.schema.json",
+            "identifier": "pkg:npm/example",
+            "updatedAt": "2026-11-01T00:00:00Z",
+            "definitions": {
+              "support": [
+                {
+                  "id": "full",
+                  "description": "Relative support",
+                  "url": "https://example.com/full.json"
+                }
+              ]
+            },
+            "events": [
+              {
+                "id": 3,
+                "type": "withdrawn",
+                "effective": "2026-06-30T00:00:00Z",
+                "published": "2026-01-01T00:00:00Z",
+                "eventId": 2
+              },
+              {
+                "id": 2,
+                "type": "released",
+                "effective": "2026-02-01T00:00:00Z",
+                "published": "2026-02-01T00:00:00Z",
+                "version": "2.0.0"
+              },
+              {
+                "id": 1,
+                "type": "released",
+                "effective": "2026-01-01T00:00:00Z",
+                "published": "2026-01-01T00:00:00Z",
+                "version": "1.0.0"
+              }
+            ]
+          }
+        ],
+        "policyResources": {
+          "https://example.com/full.json": {
+            "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+            "policy": "svers:npm/latest"
+          }
+        },
+        "cleComplete": true,
+        "asOf": "2026-11-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "supported"
+      }
+    },
+    {
+      "id": "cle-additive-definitions",
+      "operation": "supported",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "1.0.0",
+        "cle": [
+          {
+            "$schema": "https://tc54.org/schemas/cle/cle-1.0.0.schema.json",
+            "identifier": "pkg:npm/example",
+            "updatedAt": "2026-11-01T00:00:00Z",
+            "definitions": {
+              "support": [
+                {
+                  "id": "full",
+                  "description": "Relative support",
+                  "url": "https://example.com/full.json"
+                },
+                {
+                  "id": "new",
+                  "description": "New relative support",
+                  "url": "https://example.com/new.json"
+                }
+              ]
+            },
+            "events": [
+              {
+                "id": 2,
+                "type": "released",
+                "effective": "2026-02-01T00:00:00Z",
+                "published": "2026-02-01T00:00:00Z",
+                "version": "2.0.0"
+              },
+              {
+                "id": 1,
+                "type": "released",
+                "effective": "2026-01-01T00:00:00Z",
+                "published": "2026-01-01T00:00:00Z",
+                "version": "1.0.0"
+              }
+            ]
+          }
+        ],
+        "policyResources": {
+          "https://example.com/full.json": {
+            "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+            "policy": "svers:npm/latest-major:2"
+          },
+          "https://example.com/new.json": {
+            "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+            "policy": "svers:npm/latest-major:1"
+          }
+        },
+        "cleComplete": true,
+        "asOf": "2026-11-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "supported"
+      }
+    },
+    {
+      "id": "cle-external-source-precedence",
+      "operation": "supported",
+      "clock": "2026-11-01T00:00:00Z",
+      "inputs": {
+        "purl": "pkg:npm/example",
+        "version": "3.0.0",
+        "cle": [
+          {
+            "$schema": "https://tc54.org/schemas/cle/cle-1.0.0.schema.json",
+            "identifier": "pkg:npm/example",
+            "updatedAt": "2026-11-01T00:00:00Z",
+            "definitions": {
+              "support": [
+                {
+                  "id": "full",
+                  "description": "Relative support",
+                  "url": "https://example.com/full.json"
+                }
+              ]
+            },
+            "events": [
+              {
+                "id": 3,
+                "type": "withdrawn",
+                "effective": "2026-06-30T00:00:00Z",
+                "published": "2026-01-01T00:00:00Z",
+                "eventId": 2
+              },
+              {
+                "id": 2,
+                "type": "released",
+                "effective": "2026-02-01T00:00:00Z",
+                "published": "2026-02-01T00:00:00Z",
+                "version": "2.0.0"
+              },
+              {
+                "id": 1,
+                "type": "released",
+                "effective": "2026-01-01T00:00:00Z",
+                "published": "2026-01-01T00:00:00Z",
+                "version": "1.0.0"
+              }
+            ]
+          }
+        ],
+        "policyResources": {
+          "https://example.com/full.json": {
+            "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+            "policy": "svers:npm/latest"
+          }
+        },
+        "cleComplete": true,
+        "releaseList": {
+          "complete": true,
+          "releases": [
+            {
+              "version": "3.0.0",
+              "releasedAt": "2026-03-01T00:00:00Z"
+            }
+          ]
+        },
+        "asOf": "2026-11-01T00:00:00Z"
+      },
+      "expected": {
+        "status": "supported"
+      }
+    }
+  ]
+}

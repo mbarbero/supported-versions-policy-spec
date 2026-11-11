@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/svers/policy-1.0.0-draft.schema.json",
+  "title": "Supported Versions Policy draft 3",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "policy"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://example.org/svers/policy-1.0.0-draft.schema.json"
+    },
+    "identifier": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/purl"
+        },
+        {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/purl"
+          }
+        }
+      ]
+    },
+    "policy": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/expression"
+        },
+        {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/expression"
+          }
+        }
+      ]
+    },
+    "prereleases": {
+      "type": "boolean"
+    },
+    "documentation": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://[^/]+"
+    }
+  },
+  "$defs": {
+    "purl": {
+      "type": "string",
+      "minLength": 5,
+      "pattern": "^pkg:"
+    },
+    "expression": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[ \\t]*(vers|svers):"
+    }
+  }
+}
