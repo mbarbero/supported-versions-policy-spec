@@ -69,9 +69,9 @@ An `svers` expression selects versions relative to what has been released. It re
 svers      := "svers:" scheme "/" expression
 expression := term ( "|" term )*
 term       := selector ( " in " ( term | "{" vers-constraints "}" ) )?
-selector   := "all" | "none" | "latest" | "latest:" N
-            | "latest-major:" N | "latest-minor:" N | "latest-patch:" N
-            | "age:" duration
+selector   := "all" | "none" | "latest" | "age:" duration
+            | counted ":" N ( "+" duration )?
+counted    := "latest" | "latest-major" | "latest-minor" | "latest-patch"
 N          := positive integer without leading zero
 duration   := "P" N ( "D" | "M" | "Y" )
 ```
@@ -103,7 +103,31 @@ A group with fewer than N members is kept whole. "Major" and "minor" are the gro
 
 A patch release starts its own lifetime; it does not extend the lifetime of its branch.
 
-### 4.3 Examples
+### 4.3 Grace periods
+
+A counted selector can carry a grace period. `latest-major:1+P1Y` selects the newest major, and each older major until one year after it was superseded. The same suffix works on the other counted selectors, and the rule is the same for all four: the selector counts elements within a scope.
+
+| Selector | Counts | Within |
+| --- | --- | --- |
+| `latest:N+P` | versions | all candidates |
+| `latest-major:N+P` | majors | all candidates |
+| `latest-minor:N+P` | minor lines | each major |
+| `latest-patch:N+P` | versions | each minor line |
+
+- An element **starts** at the earliest release among its candidates.
+- An element is **current** while fewer than N higher elements of its scope have started. Current elements are selected, exactly as without a grace period.
+- Otherwise it was **superseded** at the instant when the N-th of its higher elements started. It stays selected until P after that instant, with the calendar arithmetic of section 4.2.
+
+What follows from the rule:
+
+- The clock starts when the successor ships, not when the old line was last released. A patch on the old major is covered during the grace period but does not extend it.
+- With `prereleases` false, a pre-release supersedes nothing: the successor starts at its first stable release.
+- An element released after it was already superseded, such as a backport, gets what is left of the grace period, counted from the same instant.
+- Like `age:`, a grace period needs a dated release list.
+
+Example: the 3.x line was last released as `3.2.0` on 2025-08-01, and `4.0.0` ships on 2026-10-01. The policy `svers:npm/latest-patch:1 in latest-minor:1 in latest-major:1+P1Y` resolves to `vers:npm/3.2.0` before that day, to `vers:npm/3.2.0|4.0.0` from 2026-10-01, and to `vers:npm/4.0.0` from 2027-10-01.
+
+### 4.4 Examples
 
 | Policy in words | Expression |
 | --- | --- |
@@ -111,6 +135,7 @@ A patch release starts its own lifetime; it does not extend the lifetime of its 
 | Every release in the two newest majors | `svers:npm/latest-major:2` |
 | Newest patch of every minor line in the two newest majors | `svers:npm/latest-patch:1 in latest-major:2` |
 | Only the newest release of each of the two newest majors | `svers:npm/latest-patch:1 in latest-minor:1 in latest-major:2` |
+| The newest release of the newest major, and of the previous major for one year after the new one ships | `svers:npm/latest-patch:1 in latest-minor:1 in latest-major:1+P1Y` |
 | The newest major, plus the 2.10 line and later 2.x | `svers:npm/latest-major:1\|all in {>=2.10.0\|<3.0.0-0}` |
 | Each release for 18 months | `svers:pypi/age:P18M` |
 
@@ -134,7 +159,7 @@ covers(policyDocument, purl, version, releaseList?, asOf?) -> result
 ```
 
 - **Release list.** `complete` is the caller's statement that the list is the whole release history of the package. The caller leaves out yanked or withdrawn releases. Either every release has a `releasedAt` or none has. Releases that are equivalent under the scheme count once; if their dates differ, it is an error.
-- **Evaluation time.** `asOf` defaults to the current time, captured once. With a dated list, releases after `asOf` are dropped. An undated list describes the present: an explicit `asOf` then makes relative entries unknown, and so does `age:`. Timestamps are RFC 3339.
+- **Evaluation time.** `asOf` defaults to the current time, captured once. With a dated list, releases after `asOf` are dropped. An undated list describes the present: an explicit `asOf` then makes relative entries unknown, and so does a grace period or `age:`. Timestamps are RFC 3339.
 - **What a past or future `asOf` means.** It filters by date only. It does not reconstruct what was known at that time, and it assumes no releases beyond those supplied.
 
 ### 5.2 Procedure
@@ -275,7 +300,7 @@ For version `2.10.1`, the result is supported at `2026-06-29T23:59:59Z` and unsu
 - [ ] **Future-dated events.** "Supported until a date" relies on an `endOfSupport` event whose `effective` time is in the future. CLE implies this is allowed but does not say so.
 - [ ] **Retiring a support definition.** CLE has no event for it. An `endOfSupport` over all versions works for this binding, but a consumer that ignores policy documents will read it as "everything is unsupported".
 - [ ] **Should relative expiry become events?** When a new major pushes an old one out of a `latest-major:2` policy, nothing appears in the ledger. Tools could generate the matching `endOfSupport` events so that plain CLE consumers see the change.
-- [ ] **Branch lifetimes.** "Each minor line is supported for 18 months after the next one ships" cannot be expressed; `age:` is per release.
+- [ ] **Branch lifetimes.** "Each minor line is supported for 18 months from its own first release" cannot be expressed: a grace period counts from the successor, and `age:` is per release.
 - [ ] **Reason codes.** Should the reasons behind unknown and error be standardised so that tools report them alike?
 - [ ] **Name.** `svers` is a working name.
 
