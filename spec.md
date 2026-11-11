@@ -1,6 +1,5 @@
 # Supported-Versions Policy Specification
 
-Nov 11, 2026
 Draft v3
 
 ## 1. Purpose and scope
@@ -35,7 +34,7 @@ References of the form "VERS §A.x" point to Annex A of ECMA-428. An `svers` str
 
 ```json
 {
-  "$schema": "https://example.org/svers/policy-1.0.0-draft.3.schema.json",
+  "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
   "identifier": "pkg:npm/example",
   "policy": "svers:npm/latest-major:2",
   "prereleases": false,
@@ -135,7 +134,8 @@ Example: the 3.x line was last released as `3.2.0` on 2025-08-01, and `4.0.0` sh
 | Every release in the two newest majors | `svers:npm/latest-major:2` |
 | Newest patch of every minor line in the two newest majors | `svers:npm/latest-patch:1 in latest-major:2` |
 | Only the newest release of each of the two newest majors | `svers:npm/latest-patch:1 in latest-minor:1 in latest-major:2` |
-| The newest release of the newest major, and of the previous major for one year after the new one ships | `svers:npm/latest-patch:1 in latest-minor:1 in latest-major:1+P1Y` |
+| The newest release of the newest major, and of each older major for one year after its successor ships. Three majors can overlap when two majors ship within a year | `svers:npm/latest-patch:1 in latest-minor:1 in latest-major:1+P1Y` |
+| The same, but never more than two majors: the older one drops as soon as a third ships | `svers:npm/latest-patch:1 in latest-minor:1 in latest-major:1+P1Y in latest-major:2` |
 | The newest major, plus the 2.10 line and later 2.x | `svers:npm/latest-major:1\|all in {>=2.10.0\|<3.0.0-0}` |
 | Each release for 18 months | `svers:pypi/age:P18M` |
 
@@ -250,7 +250,7 @@ The policy document at `https://example.com/support/security-2.10-v1.json`:
 
 ```json
 {
-  "$schema": "https://example.org/svers/policy-1.0.0-draft.3.schema.json",
+  "$schema": "https://example.org/svers/policy-1.0.0-draft.schema.json",
   "identifier": "pkg:npm/example",
   "policy": "vers:npm/>=2.10.0|<2.11.0-0"
 }
@@ -291,6 +291,11 @@ The CLE document:
 ```
 
 For version `2.10.1`, the result is supported at `2026-06-29T23:59:59Z` and unsupported from `2026-06-30T00:00:00Z`. From then on it stays unsupported even if the policy document cannot be fetched, because the definition has ended.
+
+### 7.3 Companion files
+
+- `policy-1.0.0-draft.schema.json`: the JSON Schema of the policy document.
+- `supported-versions-conformance-draft.json`: 92 cases (74 for `covers`, 18 for `supported`), each with a fixed clock, inputs and the expected status; 38 of them also pin the resolved ranges. They cover selectors, expression syntax, VERS boundaries, lifetimes, grace periods, release-list rules, PyPI versions, which entries apply to a package, withdrawals and event overrides. An implementation needs only the `npm`, `semver` and `pypi` profiles.
 
 ## 8. Open questions
 
